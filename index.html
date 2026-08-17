@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的电影库</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <header>
+      <div><p class="eyebrow">PERSONAL CINEMA</p><h1>我的电影库</h1><p id="summary">正在读取电影资料…</p></div>
+      <button id="newMovie" class="primary">+ 添加电影</button>
+    </header>
+    <section class="toolbar">
+      <input id="search" type="search" placeholder="搜索名称、评价或备注">
+      <select id="filter"><option value="all">全部状态</option><option value="watched">已看</option><option value="unwatched">未看</option></select>
+    </section>
+    <section id="movies" class="movie-grid" aria-live="polite"></section>
+  </main>
+  <dialog id="editor">
+    <form id="movieForm" method="dialog">
+      <div class="dialog-heading"><h2 id="dialogTitle">添加电影</h2><button type="button" class="icon" id="closeDialog" aria-label="关闭">×</button></div>
+      <label>名称<input name="title" required maxlength="120"></label>
+      <label>评价<input name="rating" maxlength="80" placeholder="如：好看、4.5/5"></label>
+      <label>观影状态<select name="watched"><option value="false">未看</option><option value="true">已看</option></select></label>
+      <label>备注<textarea name="notes" rows="4" maxlength="500"></textarea></label>
+      <div class="form-actions"><button type="button" id="cancel">取消</button><button class="primary" value="default">保存</button></div>
+    </form>
+  </dialog>
+  <template id="movieTemplate"><article class="movie-card"><div class="card-top"><span class="status"></span><div class="actions"><button class="edit" title="编辑">编辑</button><button class="delete" title="删除">删除</button></div></div><h2></h2><p class="rating"></p><p class="notes"></p><button class="watch-toggle"></button></article></template>
+  <script src="app.js"></script>
+</body>
+</html>
