@@ -1,0 +1,32 @@
+{
+  "《1917》": {
+    "poster_url": "/static/posters/1917.jpg",
+    "poster_source": "https://image.tmdb.org/t/p/w342/iZf0KyrE25z1sage4SYFLCCrMi9.jpg",
+    "synopsis": "第一次世界大战期间，两名年轻的英国士兵接到一项紧急任务：穿越敌军控制的地区，向前线部队送达停止进攻的命令。时间所剩无几，而其中一人的兄长也在即将踏入陷阱的部队之中。"
+  },
+  "《敦刻尔克》": {
+    "poster_url": "/static/posters/dunkirk.jpg",
+    "poster_source": "https://image.tmdb.org/t/p/w342/ebSnODDg9lbsMIaWg2uAbjn7TO5.jpg",
+    "synopsis": "1940 年，大批英法盟军被围困在法国敦刻尔克的海滩上。影片从陆地、海洋和天空三个视角，讲述士兵等待撤离、英国平民驾船参与救援，以及飞行员为撤退提供掩护的经历。"
+  },
+  "《阿甘正传》": {
+    "poster_url": "/static/posters/forrest-gump.jpg",
+    "poster_source": "https://image.tmdb.org/t/p/w342/arw2vcBveWOVZr6pxd9XTd1TdQa.jpg",
+    "synopsis": "阿甘在母亲的鼓励下成长，以真诚、执着的态度面对生活。他从奔跑、大学橄榄球和越南战场一路走来，在时代变迁中经历友谊、事业与爱情，始终惦念着青梅竹马的珍妮。"
+  },
+  "《奥本海默》": {
+    "poster_url": "/static/posters/oppenheimer.jpg",
+    "poster_source": "https://image.tmdb.org/t/p/w342/ptpr0kGAckfQkJeJIt8st5dglvd.jpg",
+    "synopsis": "二战期间，物理学家罗伯特·奥本海默领导洛斯阿拉莫斯实验室的科学家参与曼哈顿计划，研制原子弹。影片交织呈现这项工程与战后对他的安全听证，探讨科学成就、政治压力与个人责任。"
+  },
+  "《肖申克的救赎》": {
+    "poster_url": "/static/posters/shawshank.jpg",
+    "poster_source": "https://image.tmdb.org/t/p/w342/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg",
+    "synopsis": "银行家安迪因谋杀妻子及其情人被判入狱，来到肖申克监狱。在漫长的牢狱岁月中，他与瑞德建立了深厚友谊，并以知识、耐心和对自由的希望，逐渐改变自己和身边人的生活。"
+  },
+  "《绿皮书》": {
+    "poster_url": "/static/posters/green-book.jpg",
+    "poster_source": "https://image.tmdb.org/t/p/w342/7BsvSuDQuoqhWmU2fL7W2GOcZHU.jpg",
+    "synopsis": "1962 年，意大利裔司机托尼受雇陪同黑人钢琴家唐·雪利前往美国南部巡演。两人依据一本为黑人旅行者提供住宿指引的绿皮书安排行程，在种族偏见和生活习惯的碰撞中逐渐理解彼此。"
+  }
+}

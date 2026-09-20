@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6f7f8">
+  <title>我的电影库</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <script defer src="{{ url_for('static', filename='vendor/lucide.min.js') }}"></script>
+  <script defer src="{{ url_for('static', filename='app.js') }}"></script>
+</head>
+<body>
+  <div class="topbar"><div class="topbar-inner"><span class="brand"><i data-lucide="clapperboard"></i> PERSONAL CINEMA</span><span class="collection-label">私人片单</span></div></div>
+  <main>
+    <header class="page-header">
+      <div><p class="eyebrow">MY COLLECTION</p><h1>我的电影库</h1><p id="summary" class="muted" aria-live="polite">正在读取电影资料…</p></div>
+      <button id="newMovie" class="primary"><i data-lucide="plus"></i><span>添加电影</span></button>
+    </header>
+    <section class="toolbar" aria-label="筛选电影">
+      <div class="segments" role="group" aria-label="观影状态">
+        <button data-filter="all" aria-pressed="true">全部 <span id="countAll">0</span></button>
+        <button data-filter="unwatched" aria-pressed="false">未看 <span id="countUnwatched">0</span></button>
+        <button data-filter="watched" aria-pressed="false">已看 <span id="countWatched">0</span></button>
+      </div>
+      <div class="search-sort">
+        <div class="search-box"><i data-lucide="search"></i><input id="search" type="search" aria-label="搜索电影" placeholder="搜索名称、评价、剧情或备注" autocomplete="off"></div>
+        <select id="sort" aria-label="排序"><option value="default">片单顺序</option><option value="title">名称排序</option><option value="updated">最近更新</option></select>
+      </div>
+    </section>
+    <div class="results-line"><h2 id="viewTitle">全部电影</h2><span id="resultCount" class="muted"></span></div>
+    <div id="loadState" class="empty-state" role="status"><i data-lucide="loader-circle" class="spin"></i><p>正在读取片单…</p></div>
+    <section id="movies" class="movie-grid" aria-label="电影列表" aria-busy="true"></section>
+    <div id="emptyState" class="empty-state" hidden><i data-lucide="film"></i><h3>没有符合条件的电影</h3><button id="resetFilters" class="secondary">清除筛选</button></div>
+    <footer class="page-footer"><span>PERSONAL CINEMA</span><span id="footerCount">我的观影记录</span></footer>
+  </main>
+
+  <dialog id="details" class="detail-dialog" aria-labelledby="detailTitle">
+    <div class="dialog-heading"><span class="eyebrow">电影详情</span><button type="button" class="icon-button" id="closeDetails" aria-label="关闭详情" title="关闭详情"><i data-lucide="x"></i></button></div>
+    <div id="detailError" class="form-error" role="alert" hidden></div>
+    <div class="detail-layout">
+      <div class="detail-poster poster-frame"><img id="detailPoster" alt="" src="{{ url_for('static', filename='poster-placeholder.png') }}"><span class="poster-missing" id="detailPosterMissing">暂无海报</span></div>
+      <div class="detail-content"><div class="detail-badges"><span id="detailStatus" class="status"></span><span id="detailRating" class="detail-rating"></span></div><h2 id="detailTitle"></h2><h3>剧情简介</h3><p id="detailSynopsis" class="synopsis"></p><button id="editFromDetails" class="secondary"><i data-lucide="pencil"></i>编辑资料</button></div>
+    </div>
+    <form id="notesForm" class="notes-form">
+      <div class="notes-label"><label for="detailNotes">我的备注</label><span id="notesCount" class="muted">0 / 5000</span></div>
+      <textarea id="detailNotes" name="notes" rows="4" maxlength="5000" placeholder="此刻的感受、喜欢的台词…"></textarea>
+      <div class="form-actions"><span id="notesStatus" class="muted" role="status"></span><button id="saveNotes" class="primary" type="submit"><i data-lucide="save"></i><span>保存备注</span></button></div>
+    </form>
+  </dialog>
+
+  <dialog id="editor" class="editor-dialog" aria-labelledby="dialogTitle">
+    <form id="movieForm">
+      <div class="dialog-heading"><h2 id="dialogTitle">添加电影</h2><button type="button" class="icon-button" id="closeEditor" aria-label="关闭编辑" title="关闭编辑"><i data-lucide="x"></i></button></div>
+      <p id="editorError" class="form-error" role="alert" hidden></p>
+      <label for="movieTitle">电影名称 <span class="required">*</span></label><input id="movieTitle" name="title" required maxlength="120" autocomplete="off">
+      <div class="editor-row"><div><label for="movieRating">评价</label><input id="movieRating" name="rating" maxlength="80" placeholder="如：很喜欢、4.5/5"></div><label class="checkbox-label"><input type="checkbox" id="movieWatched" name="watched"><span>已经看过</span></label></div>
+      <div class="poster-editor">
+        <div class="editor-preview poster-frame"><img id="posterPreview" alt="海报预览" src="{{ url_for('static', filename='poster-placeholder.png') }}"></div>
+        <div class="poster-fields"><label for="posterUrl">海报图片链接</label><input id="posterUrl" name="poster_url" maxlength="2048" placeholder="https://…" autocomplete="off"><div class="upload-row"><button type="button" id="uploadPoster" class="secondary"><i data-lucide="image-up"></i><span>上传海报</span></button><button type="button" id="clearPoster" class="icon-button" title="清除海报" aria-label="清除海报"><i data-lucide="image-off"></i></button></div><input id="posterFile" type="file" accept="image/jpeg,image/png,image/webp" hidden><p id="uploadStatus" class="muted" role="status"></p></div>
+      </div>
+      <label for="movieSynopsis">剧情简介</label><textarea id="movieSynopsis" name="synopsis" rows="4" maxlength="10000" placeholder="暂无剧情简介"></textarea>
+      <label for="movieNotes">我的备注</label><textarea id="movieNotes" name="notes" rows="3" maxlength="5000"></textarea>
+      <div class="form-actions"><button type="button" id="cancelEditor" class="secondary">取消</button><button id="saveMovie" class="primary" type="submit"><i data-lucide="check"></i><span>保存电影</span></button></div>
+    </form>
+  </dialog>
+
+  <template id="movieTemplate">
+    <article class="movie-card">
+      <button class="card-open" type="button">
+        <div class="card-poster poster-frame"><img alt="" loading="lazy" decoding="async"><span class="poster-missing">暂无海报</span><span class="status"></span></div>
+        <div class="card-copy"><h3 class="movie-title"></h3><p class="rating"></p><p class="notes-preview"></p></div>
+      </button>
+      <div class="card-actions"><button type="button" class="watch-toggle"><i data-lucide="circle-check"></i><span></span></button><div class="tools"><button type="button" class="edit icon-button" title="编辑电影" aria-label="编辑电影"><i data-lucide="pencil"></i></button><button type="button" class="delete icon-button" title="删除电影" aria-label="删除电影"><i data-lucide="trash-2"></i></button></div></div>
+    </article>
+  </template>
+  <div id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
